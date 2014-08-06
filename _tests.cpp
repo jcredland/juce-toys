@@ -1,30 +1,4 @@
-/*
-  ==============================================================================
-
-    sample_database.cpp
-    Created: 28 Jul 2014 6:37:32pm
-    Author:  Jim Credland
-
-  ==============================================================================
-*/
-
-
-/**
- Provides audio-thread access to samples stored or referred to in
- /store/settings/current/samples
-
- - Samples are indexed 1, 2, 3 ... so they can be referred to by sample
- mapping objects and other places.
- - Samples must be available instantly.
- - When loading a new sample any interval of silence should be as short as possible.
- - We should avoid putting large objects in the inter-thread call queue.
- - Samples must not load in the audio thread.
-
-
- - We should aim for a generic object transfer system to the audio thread.
- - Putting things into a ValueTree on the far side makes sense.  Though no listeners on that end.
-
- */
+/* Tests for the stuff in this folder. */
 
 #define JCF_DEBUG_LEVEL 0
 

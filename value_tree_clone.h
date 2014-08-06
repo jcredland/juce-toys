@@ -215,7 +215,7 @@ private:
     
     void replaceValueTree (typename ValueTreeCopy::Ptr replacementTree)
     {
-        /* readonly old one will be sent back to message thread for deleting. */
+        /* readonly old one will be deleted on message thread . */
         DBG ("replacing tree with: " + replacementTree->getReference().toXmlString());
         readonly = replacementTree;
     }
