@@ -74,7 +74,6 @@ private:
 };
 
 /**
-
  GarbageCollectedObjects are deleted by the GarbageCollector singleton
  automatically when no longer required.
  
@@ -83,7 +82,7 @@ private:
  Because the system memory allocator probably uses a lock, it's possible to get
  a long delay when you create or delete an object.
  
- So instead you can create GarbageCollectedObjects on a non-critical thread.
+ So instead you can create GarbageCollectedObjects on the message thread.
  
  The put them in a suitable container (@see var, @see Value, @see
  ReferenceCountedObjectPtr) to ensure the reference counting is managed for you.
@@ -96,13 +95,18 @@ private:
  object safely on the message thread.
  
  NOTE: It's important to (a) only create the objects on the message thread, and
- to (b) put them straight into a Reference Counting container.
+ to (b) put them straight into a Reference Counting container.  Otherwise the 
+ object may be deleted on the next timer call to GarbageCollector. (Why? The 
+ Timer which triggers the garbage collector is on the message thread. If you
+ created the object on a different thread the Timer might fire whilst you 
+ are holding the object with a reference count of 0, and then it'll be deleted.
+ Creating it on the message thread and putting it straight into a container
+ means the ref-count is guaranteed to be incremented, preventing this embarassing
+ and fatal situation.).
  
  IMPORTANT: If you are using this to share an object with another thread, DO NOT 
  CHANGE the object after you've shared it.  Think of it as immutable.  Best to 
  code it as: all methods to be const or thread-safe and lock-free.
- 
- Otherwise the object may be deleted on the next timer call to GarbageCollector.
  
  It would be nice to get rid of constraint (a).
 

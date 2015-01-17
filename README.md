@@ -1,5 +1,5 @@
 juce-toys
 =========
 
-A collection of parts which might be useful to people using JUCE
+A collection of parts and ideas which might be useful to people using JUCE. 
 
