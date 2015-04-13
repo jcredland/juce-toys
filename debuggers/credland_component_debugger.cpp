@@ -51,8 +51,8 @@ public:
         {
             component->setBounds(x.getValue(),
                                  y.getValue(),
-                                 h.getValue(),
-                                 w.getValue());
+                                 w.getValue(),
+                                 h.getValue());
             owner->setHighlight(component);
         }
     }
