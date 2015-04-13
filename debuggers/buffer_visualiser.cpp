@@ -123,8 +123,8 @@ public:
     {
         int st = stloc;
         int ed = endloc;
-        min = std::numeric_limits<float>::lowest();
-        max = (std::numeric_limits<float>::max) ();
+        max = std::numeric_limits<float>::lowest();
+        min = (std::numeric_limits<float>::max) ();
 
         for (int i = st; i <= ed; i++)
         {
