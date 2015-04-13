@@ -5,151 +5,136 @@
 /* You may need to uncomment the following line. */
 //#include "../JuceLibraryCode/JuceHeader.h"
 
-/**
+/** 
  Include one of these and attach it to a component you want to use as the root (usually your main window)
  and a second window will appear showing a tree view of all your components.
-
- When you click on a component a box will be drawn on your software showing the bounds of the component.
-
- Components marked as not-visible will be shown in grey.
-
- Components with zero sizes will be highlighted in red.
-
+ 
+ When you click on a component a box will be drawn on your software showing the bounds of the component. 
+ 
+ Components marked as not-visible will be shown in grey. 
+ 
+ Components with zero sizes will be highlighted in red. 
+ 
  Components partially or completely outside their parents bounds will be marked in yellow.
-
+ 
  The whole tree is rebuilt everytime you click refresh - though I might modify it to use a WeakReference
  and update in real-time at some point.
-
+ 
  @note
  This code isn't pretty, and the UI isn't pretty - it's for debugging and definitely not
  production use!
  */
 
+class ComponentBoundsEditor;
+
 class ComponentDebugger
-    :
-    public DocumentWindow
+:
+public DocumentWindow
 {
 public:
     class Debugger;
 
     class ComponentTreeViewItem
-        :
-        public TreeViewItem
+    :
+    public TreeViewItem
     {
     public:
-        ComponentTreeViewItem (Debugger* owner, Component* c);
+        ComponentTreeViewItem(Debugger * owner, Component * c);
 
-        bool mightContainSubItems() override
-        {
-            return numChildren > 0;
-        }
-        void paintItem (Graphics& g, int w, int h)
-        {
-            if (isVisible)
-                g.setColour (Colours::black);
-            else
-                g.setColour (Colours::grey);
-
-            if (zeroSizeFlag)
-                g.fillAll (Colours::red.withAlpha (0.5f));
-            else if (outsideBoundsFlag)
-                g.fillAll (Colours::yellow.withAlpha (0.5f));
-
-            g.drawText (type + ": " + name  + " bounds: " + bounds, 0, 0, w, h, Justification::left, true);
-        }
-
-        void itemSelectionChanged (bool nowSelected) override;
+        bool mightContainSubItems() override;
+        void paintItem(Graphics & g, int w, int h);
+        void itemSelectionChanged(bool nowSelected) override;
     private:
         String name;
         String type;
         bool isVisible;
-        String bounds;
+
         int numChildren;
-        Debugger* owner;
-        Rectangle<int> location;
+
+        Debugger * owner;
+
         bool zeroSizeFlag;
         bool outsideBoundsFlag;
+
+        WeakReference<Component> component;
     };
 
+    /** 
+     The main debugger component.  Attached to the ComponentDebugger document window.
+     */
     class Debugger
-        :
-        public Component,
-        public Button::Listener
+    :
+    public Component,
+    public Button::Listener
     {
     public:
-        Debugger (Component* rootComponent)
-            :
-            root (rootComponent),
-            refreshButton ("Refresh")
-        {
-            addAndMakeVisible (refreshButton);
-            addAndMakeVisible (tree);
-            refreshButton.addListener (this);
-            refresh();
-            tree.setLookAndFeel (&lookAndFeel);
-            refreshButton.setLookAndFeel (&lookAndFeel);
-        }
+        Debugger(Component * rootComponent);
 
-        void buttonClicked (Button*) override
-        {
-            refresh();
-        }
+        ~Debugger();
 
-        void resized() override
-        {
-            refreshButton.setBounds (0, 0, 130, 20);
-            tree.setBounds (0, 20, getWidth(), getHeight());
-        }
+        void buttonClicked(Button *) override;
+        void refresh();
 
-        void paint (Graphics& g) override
-        {
-            g.fillAll (Colours::lightgrey);
-        }
+        /** 
+         Returns the location of the component in the root component's
+         coordinate space. 
+         */
+        Rectangle<int> getLocationOf(Component * c);
 
-        void refresh()
-        {
-            tree.setRootItem (new ComponentTreeViewItem (this, root));
-        }
-
-        Rectangle<int> getLocationOf (Component* c)
-        {
-            return root->getLocalArea (c, c->getLocalBounds());
-        }
-
+        /**
+         A component which draws over your existing application to show where
+         a selected component is positioned. 
+         
+         @todo - allow the component to be dragged using this.
+         */
         class Highlighter : public Component
         {
         public:
-            void paint (Graphics& g)
+            void paint(Graphics & g)
             {
-                g.setColour (Colours::red);
-                g.drawRect (getLocalBounds());
+                g.setColour(Colours::red);
+                g.drawRect(getLocalBounds());
             }
         };
 
-        void setHighlight (Rectangle<int> bounds)
+        void setComponentToEdit(Component *);
+
+        void setHighlight(Component * component)
         {
             highlight = new Highlighter();
-            highlight->setBounds (bounds);
-            root->addAndMakeVisible (highlight);
+            highlight->setBounds(getLocationOf(component));
+            root->addAndMakeVisible(highlight);
         }
 
     private:
+        void resized() override;
+        void paint(Graphics & g) override { g.fillAll(Colours::lightgrey); }
+
         ScopedPointer<Highlighter> highlight;
+        ScopedPointer<ComponentBoundsEditor> boundsEditor;
+
+        /* We use the default look and feel just in case your application has some
+         wacky and unreadable alternative in use. */
         LookAndFeel_V3 lookAndFeel;
-        Component* root;
+
+        Component * root;
+
         TextButton refreshButton;
         TreeView tree;
 
-        JUCE_DECLARE_NON_COPYABLE (Debugger)
+        JUCE_DECLARE_NON_COPYABLE(Debugger)
     };
 
-    ComponentDebugger (Component* root)
-        :
-        DocumentWindow ("Component Debugger", Colours::black, 7, true),
-        debugger (root)
+    /** 
+     Show a component debugger, using root as the starting point. 
+     */
+    ComponentDebugger(Component * root)
+    :
+    DocumentWindow("Component Debugger", Colours::black, 7, true),
+    debugger(root)
     {
-        debugger.setSize (400, 400);
-        setContentNonOwned (&debugger, true);
+        debugger.setSize(400, 400);
+        setContentNonOwned(&debugger, true);
         setResizable (true, false);
         setUsingNativeTitleBar (true);
         setVisible (true);
