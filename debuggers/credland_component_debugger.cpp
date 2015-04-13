@@ -3,17 +3,17 @@
 //#include "credland_component_debugger.h"
 
 
-ComponentDebugger::ComponentTreeViewItem::ComponentTreeViewItem(Debugger * owner, Component * c)
-:
-owner(owner),
-outsideBoundsFlag(false)
+ComponentDebugger::ComponentTreeViewItem::ComponentTreeViewItem (Debugger* owner, Component* c)
+    :
+    owner (owner),
+    outsideBoundsFlag (false)
 {
     numChildren = c->getNumChildComponents();
     name = c->getName() + "[id:" + c->getComponentID() + "]";
-    type = typeid(*c).name();
+    type = typeid (*c).name();
     isVisible = c->isVisible();
     bounds = c->getBounds().toString();
-    location = owner->getLocationOf(c);
+    location = owner->getLocationOf (c);
 
     auto localBounds = c->getBounds();
 
@@ -24,17 +24,17 @@ outsideBoundsFlag(false)
     if (parent)
     {
         auto parentBounds = parent->getLocalBounds();
-        outsideBoundsFlag = ! (parentBounds.contains(localBounds));
+        outsideBoundsFlag = ! (parentBounds.contains (localBounds));
     }
 
     /* We have to build the whole tree now as the components might be deleted in operation... */
     for (int i = 0; i < numChildren; ++i)
-        addSubItem(new ComponentTreeViewItem(owner, c->getChildComponent(i)));
+        addSubItem (new ComponentTreeViewItem (owner, c->getChildComponent (i)));
 }
 
 
-void ComponentDebugger::ComponentTreeViewItem::itemSelectionChanged(bool nowSelected)
+void ComponentDebugger::ComponentTreeViewItem::itemSelectionChanged (bool nowSelected)
 {
     if (nowSelected)
-        owner->setHighlight(location);
+        owner->setHighlight (location);
 }

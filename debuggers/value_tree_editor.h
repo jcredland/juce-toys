@@ -15,18 +15,18 @@
 /* You may need to uncomment the following line. */
 //#include "../JuceLibraryCode/JuceHeader.h"
 
-/** 
+/**
  Display a separate desktop window for viewed and editing a value tree's
  property fields.
- 
+
  Instantate a ValueTreeEditor instance, then call ValueTreeEditor::setSource(ValueTree &)
  and it'll display your tree.
- 
+
  For example:
 
  @code
- valueTreeEditor = new ValueTreeEditor(); 
- valueTreeEditor->setSource(myTree); 
+ valueTreeEditor = new ValueTreeEditor();
+ valueTreeEditor->setSource(myTree);
 
  @note
  This code isn't pretty, and the UI isn't pretty - it's for debugging and definitely not
