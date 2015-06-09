@@ -2,16 +2,25 @@
 #ifndef BigKickTrigger_credland_component_debugger_h
 #define BigKickTrigger_credland_component_debugger_h
 
-/* You may need to uncomment the following line. */
-//#include "../JuceLibraryCode/JuceHeader.h"
 
 /** 
  Include one of these and attach it to a component you want to use
  as the root (usually your main window) and a second window will
  appear showing a tree view of all your components.
 
- When you click on a component a box will be drawn on your software
- showing the bounds of the component.
+ e.g.
+
+ ScopedPointer<jcf::ComponentDebugger> debugger; 
+
+ Then something like: 
+
+ MainComponent::MainComponent() 
+ {
+    debugger = new jcf::ComponentDebugger(this); 
+ }
+
+ When you click on a component in the debugger's list a box will 
+ be drawn on your software showing the bounds of the component.
 
  Components marked as not-visible will be shown in grey.
 
