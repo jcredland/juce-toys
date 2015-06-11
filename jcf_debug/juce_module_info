@@ -7,7 +7,7 @@
   "license":        "GPL",
 
   "dependencies":   [ {"id":"juce_core", "version":"matching"},
-                      {"id":"juce_gui", "version":"matching"}],
+                      {"id":"juce_gui_basics", "version":"matching"}],
 
   "include":        "jcf_debug.h",
 
