@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- JUCE Debugging Visualizers - Jim Credland : jim@credland.net -->
+
+<!-- 
+
+Install into 
+
+    %VSINSTALLDIR%\Common7\Packages\Debugger\Visualizers (requires admin access)
+OR  %USERPROFILE%\My Documents\Visual Studio 2012\Visualizers\
+
+One rainy day I'll make this into a Visual Studio Extension for easy installation.
+
+Please submit any suggested changes on github.  
+
+See http://github.com/jcredland/juce-toys
+
+-->
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+
+<Type Name="juce::Array&lt;*&gt;">
+    <DisplayString Condition="numUsed == 0">{{ EMPTY numAllocated={data.numAllocated} }}</DisplayString>
+    <DisplayString>{{ numUsed={numUsed} numAllocated={data.numAllocated} }}</DisplayString>
+    <Expand>
+        <Item Name="[numUsed]">numUsed</Item>
+        <ArrayItems>
+            <Size>numUsed</Size>
+            <ValuePointer>data.elements.data</ValuePointer>
+        </ArrayItems>
+    </Expand>
+</Type>
+
+<Type Name="juce::ReferenceCountedArray&lt;*&gt;">
+    <DisplayString Condition="numUsed == 0">{{ EMPTY numAllocated={data.numAllocated} }}</DisplayString>
+    <DisplayString>{{ numUsed={numUsed} numAllocated={data.numAllocated} }}</DisplayString>
+    <Expand>
+        <Item Name="[numUsed]">numUsed</Item>
+        <ArrayItems>
+            <Size>numUsed</Size>
+            <ValuePointer>data.elements.data</ValuePointer>
+        </ArrayItems>
+    </Expand>
+</Type>
+
+<Type Name="juce::ValueTree">
+    <DisplayString Condition="object.referencedObject == 0">ValueTree::invalid</DisplayString>
+    <DisplayString>{{ (valuetree) type={object.referencedObject->type} }}</DisplayString>
+    <Expand>
+        <Item Name="properties">object.referencedObject->properties</Item>
+        <Item Name="children">object.referencedObject->children</Item>
+    </Expand>
+</Type>
+
+
+<Type Name="juce::Identifier">
+    <DisplayString>{{ identifier={name.text.data} }}</DisplayString>
+</Type>
+<!-- Types of var objects: 
+    class VariantType;            friend class VariantType;
+
+    class VariantType_Void;       friend class VariantType_Void;
+    class VariantType_Undefined;  friend class VariantType_Undefined;
+    class VariantType_Int;        friend class VariantType_Int;
+
+    class VariantType_Int64;      friend class VariantType_Int64;
+    class VariantType_Double;     friend class VariantType_Double;
+    class VariantType_Bool;       friend class VariantType_Bool;
+
+    class VariantType_String;     friend class VariantType_String;
+    class VariantType_Object;     friend class VariantType_Object;
+    class VariantType_Array;      friend class VariantType_Array;
+
+    class VariantType_Binary;     friend class VariantType_Binary;
+    class VariantType_Method;     friend class VariantType_Method;
+    -->
+<Type Name="juce::var">
+    <DisplayString Condition="type == &amp;juce::var::VariantType_Void::instance">{{ intValue={value.intValue} }}</DisplayString>
+    <DisplayString Condition="type == &amp;juce::var::VariantType_Undefined::instance">{{ intValue={value.intValue} }}</DisplayString>
+    <DisplayString Condition="type == &amp;juce::var::VariantType_Int::instance">{{ intValue={value.intValue} }}</DisplayString>
+    <!-- -->
+    <DisplayString Condition="type == &amp;juce::var::VariantType_Int64::instance">{{ int64Value={value.int64Value} }}</DisplayString>
+    <DisplayString Condition="type == &amp;juce::var::VariantType_Double::instance">{{ doubleValue={value.doubleValue} }}</DisplayString>
+    <DisplayString Condition="type == &amp;juce::var::VariantType_Bool::instance">{{ boolValue={value.boolValue} }}</DisplayString>
+    <!-- -->
+    <DisplayString Condition="type == &amp;juce::var::VariantType_String::instance">{{ stringValue={reinterpret_cast&lt;String*&gt;(value.stringValue)->text.data} }}</DisplayString>
+    <DisplayString Condition="type == &amp;juce::var::VariantType_Object::instance">{{ VariantType_Object }}</DisplayString>
+    <DisplayString Condition="type == &amp;juce::var::VariantType_Array::instance">{{ VariantType_Array }}</DisplayString>
+    <!-- -->
+    <DisplayString Condition="type == &amp;juce::var::VariantType_Binary::instance">{{ VariantType_Binary }}</DisplayString>
+    <DisplayString Condition="type == &amp;juce::var::VariantType_Method::instance">{{ VariantType_Method }}</DisplayString>
+</Type>
+
+</AutoVisualizer>
