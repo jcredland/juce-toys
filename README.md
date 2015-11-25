@@ -14,10 +14,10 @@ An equivalent LLDB file is provided.  Installation instructions are in the comme
 There are four development debugging utilities in the juce module jcf_debug.
 
 I use these all the time.  They are: 
-- credland_component_debugger - attach one of these to a component and get a list of all its children as a tree in a separate window.  Problem components are marked in grey (not visible), yellow (off screen) or red (zero size). (See the screenshot png in the root folder)
-- value_tree_editor.h - attach this to a valuetree and a separate window will open where you can view (and change properties) of the tree. 
-- buffer_visualiser.h - one of these can be used to view a buffer (typically an array of floats) when debugging DSP code.  You can put a macros into your code at places you want to be able to inspect the buffer contents.  I wrote it while debugging some auto-correlation code for a pitch shifter and it's been a life safer a couple of times since. 
-- font and colour designer - which allows you to easily flick between colours and fonts for a component.  Handy when you are designing a UI. 
+- ComponentDebugger - attach one of these to a component and get a list of all its children as a tree in a separate window.  Problem components are marked in grey (not visible), yellow (off screen) or red (zero size). (See the screenshot png in the root folder)
+- ValueTreeDebugger - attach this to a valuetree and a separate window will open where you can view (and change properties) of the tree. 
+- BufferDebugger - one of these can be used to view a buffer (typically an array of floats) when debugging DSP code.  You can put a macros into your code at places you want to be able to inspect the buffer contents.  I wrote it while debugging some auto-correlation code for a pitch shifter and it's been a life safer a couple of times since. 
+- FontAndColourDesigner - which allows you to easily flick between colours and fonts for a component.  Handy when you are designing a UI.  Though perhaps can be replaced with the Projucer these days!
 
 The debuggers aren't pretty - but they are functional and shouldn't crash!  Let me know if you get any problems!
 
