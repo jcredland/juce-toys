@@ -1,0 +1,2 @@
+You will need to setup the JUCE module paths in the project before 
+launching this.  Make sure you add JCF_DEBUG as well!

@@ -1,21 +1,15 @@
-/*
-  ==============================================================================
 
-    jcf_gui.cpp
-    Created: 21 Jul 2014 12:08:08pm
-    Author:  Jim Credland
-
-  ==============================================================================
-*/
 
 #include "jcf_debug.h"
 
 
 namespace jcf {
-using namespace juce; 
-
-#include "source/buffer_visualiser.cpp"
-#include "source/credland_component_debugger.cpp"
+    
+using namespace juce;
+    
+#include "source/value_tree_debugger.cpp"
+#include "source/buffer_debugger.cpp"
+#include "source/component_debugger.cpp"
 #include "source/font_and_colour_designer.cpp"
 
 }

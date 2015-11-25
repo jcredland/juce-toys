@@ -1,6 +1,14 @@
 juce-toys
 =========
 
+## NATVIS
+
+A NatVis file is provided to help with debugging in Visual Studio.  You won't want to be without it.  Refer to microsofts NatVis instructions for installation.  It'll need to go in the right folder. 
+
+## LLDB
+
+An equivalent LLDB file is provided.  Installation instructions are in the comments at the top of the file.  See juce_lldb_xcode.py.
+
 ## JCF_DEBUG: JUCE Debugging Module
 
 There are four development debugging utilities in the juce module jcf_debug.

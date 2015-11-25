@@ -13,16 +13,18 @@
 
 #include "AppConfig.h"
 #include <map>
-#include <juce/modules/juce_graphics/juce_graphics.h>
-#include <juce/modules/juce_gui_basics/juce_gui_basics.h>
-#include <juce/modules/juce_gui_extra/juce_gui_extra.h>
+#include <modules/juce_core/juce_core.h>
+#include <modules/juce_graphics/juce_graphics.h>
+#include <modules/juce_gui_basics/juce_gui_basics.h>
+#include <modules/juce_gui_extra/juce_gui_extra.h>
 
 namespace jcf {
-using namespace juce; 
+    
+using namespace juce;
 
-#include "source/buffer_visualiser.h"
-#include "source/value_tree_editor.h"
-#include "source/credland_component_debugger.h"
+#include "source/buffer_debugger.h"
+#include "source/value_tree_debugger.h"
+#include "source/component_debugger.h"
 #include "source/font_and_colour_designer.h"
 
 }
