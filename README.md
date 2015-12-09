@@ -16,7 +16,7 @@ comments at the top of the file.  See juce_lldb_xcode.py.
 
 ## JCF_DEBUG: JUCE Debugging Module
 
-There are four development debugging utilities in the juce module jcf_debug.
+There are five development debugging utilities in the juce module jcf_debug.
 
 I use these all the time.  They are: 
 - ComponentDebugger - attach one of these to a component and get a list of all
@@ -30,6 +30,10 @@ I use these all the time.  They are:
   code at places you want to be able to inspect the buffer contents.  I wrote
   it while debugging some auto-correlation code for a pitch shifter and it's
   been a life safer a couple of times since. 
+- advanced_leak_detector.h - is a utility you can add to a class when you have
+  a memory leak from an object.  it returns the stack back-trace of the leaked
+  objects allowing you to find out where in your maze of source-code-complexity
+  you created them!
 - FontAndColourDesigner - which allows you to easily flick between colours and
   fonts for a component.  Handy when you are designing a UI.  Though perhaps
   can be replaced with the Projucer these days!
@@ -37,17 +41,10 @@ I use these all the time.  They are:
 The debuggers aren't pretty - but they are functional and shouldn't crash!  Let
 me know if you get any problems!  
 
+## MULTITHREADING 
 
-** Other
-
-A collection of parts and ideas which might be useful to people using JUCE. 
-
-- adsr_editor.cpp, adsr_editor.h - is a basic, but nice looking envelope
-  editor. 
-- advanced_leak_detector.h - is a utility you can add to a class when you have
-  a memory leak from an object.  it returns the stack back-trace of the leaked
-  objects allowing you to find out where in your maze of source-code-complexity
-  you created them!
+A JUCE Module for multi-threading problems in audio plugins.  See the Doxygen
+documentation for more information. 
 - garbage_collected_object - is a garbage collector i use for handling the
   deletion of objects on the message thread when the audio thread has finished
   with them. 
@@ -58,3 +55,10 @@ A collection of parts and ideas which might be useful to people using JUCE.
   my message thread to my audio thread without locks (works in conjunction with
   the nonblocking call queue and the garbage collector). 
 
+
+** Other
+
+A collection of parts and ideas which might be useful to people using JUCE. 
+
+- adsr_editor.cpp, adsr_editor.h - is a basic, but nice looking envelope
+  editor. 

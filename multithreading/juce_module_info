@@ -1,0 +1,32 @@
+{
+  "id": "multithreading",
+  "name": "Multithreading support library",
+  "version": "0.0.1",
+  "description": "Utilities to support multi-threading applications and audio plugins",
+  "website": "http://www.github.com/jcredland/",
+  "license": "MIT",
+  "dependencies": [
+    {
+      "id": "juce_core",
+      "version": "matching"
+    },
+    {
+      "id": "juce_data_structures",
+      "version": "matching"
+    }
+  ],
+  "include": "multithreading.h",
+  "compile": [
+    {
+      "file": "multithreading.cpp",
+      "target": "! xcode"
+    },
+    {
+      "file": "multithreading.mm",
+      "target": "xcode"
+    }
+  ],
+  "browse": [
+    "source/*"
+  ]
+}

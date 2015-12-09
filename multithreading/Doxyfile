@@ -1,0 +1,8 @@
+PROJECT_NAME = multithreading
+INPUT = source
+OUTPUT_DIRECTORY = docs
+GENERATE_LATEX         = NO
+GENERATE_HTML          = YES
+HTML_OUTPUT            = .
+
+

@@ -8,6 +8,5 @@
   ==============================================================================
 */
 
-#include "garbage_collected_object.h"
 
 juce_ImplementSingleton (GarbageCollector)

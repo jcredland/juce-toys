@@ -26,6 +26,7 @@ using namespace juce;
 #include "source/value_tree_debugger.h"
 #include "source/component_debugger.h"
 #include "source/font_and_colour_designer.h"
+#include "source/advanced_leak_detector.h"
 
 }
 

@@ -12,23 +12,26 @@
 #define AUDIOTHREAD_FIFO_H_INCLUDED
 
 
-
 /**
- A function call queue which enables functions to be called asychronously on 
- another thread.  This is a one-reader, one-writer FIFO.  You should be using
- callf() from a single thread, and calling synchronize on a different single 
- thread. 
-
- If you need two threads to communicate in both directions in a lock free 
- fashion then use two LockFreeCallQueue objects.
-
- It has the following special features:
- - No locking
- - Avoids using the system allocator except during the constructor.
-
- Watch out for:
- - Objects you pass as function arguments, which are passed by value, doing 
- memory allocation, which may result in a lock.
+ * @brief Allows a function call to be executed on a different thread, in a fast
+ * lock-safe and thread-safe manner. 
+ *
+ * A function call queue which enables functions to be called asychronously on
+ * another thread.  This is a one-reader, one-writer FIFO.  You should be using
+ * callf() from a single thread, and calling synchronize on a different single
+ * thread.  If you need two threads to communicate in both directions in a lock
+ * free fashion then use two LockFreeCallQueue objects.  
+ *
+ * It has the following special features: 
+ *   - No locking 
+ *   - Avoids using the system allocator except during the constructor.  
+ *
+ *   Watch out for: 
+ *   - Objects you pass as function arguments, which are passed by value, doing
+ *   memory allocation, which may result in a lock.
+ *
+ * ## Unit Tests
+ * A unit-test is provided in the _tests directory which be useful reference.
  */
 
 class LockFreeCallQueue
@@ -50,12 +53,14 @@ public:
         delete [] fifodata;
     }
 
+    /** @brief return true if the queue is empty. */
     bool isEmpty()
     {
         return fifo.getTotalSize() == fifo.getFreeSpace();
     }
 
-    /** Return the amount of free space in the queue. 
+    /** @brief Return the amount of free space in the queue. 
+     *
      * If the queue does not have enough free space your callf() call will be 
      * dropped which may be a problem.  You may want to check the result of 
      * this function call during debugging. And bear in mind there are no 
@@ -69,9 +74,12 @@ public:
     }
 
     /**
-    Add a function to the queue.  Use std::bind to call the function
-    like this:
+     * @brief Calls a function, via the queue, on a different thread. 
+     *
+     * Add a function to the queue.  Use std::bind to call the function like
+     * this:
 
+    @code
     class MyClass {
     public:
         void queueUpdateJob() {
@@ -83,6 +91,7 @@ public:
         }
         LockFreeCallQueue queue;
     };
+    @endcode
 
 
     */
@@ -110,7 +119,9 @@ public:
         return true;
     }
 
-    /** Call this function in the target thread.  When this function is called
+    /** @brief Execute all the calls in the queue. 
+     *
+     * Call this function in the target thread.  When this function is called
      * all the calls added with callf will be executed. 
      *
      * @returns true if there was anything in the queue, false if the queue was

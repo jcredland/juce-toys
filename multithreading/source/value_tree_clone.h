@@ -13,7 +13,8 @@
 
 
 
-/** A GarbageCollectedObject wrapper around a ValueTree. */
+/** @brief A GarbageCollectedObject wrapper around a ValueTree. 
+ * You shouldn't have to create one of these directly.  See @CriticalThreadValueTree */
 class ValueTreeCopy :
     public GarbageCollectedObject
 {
@@ -29,22 +30,24 @@ private:
     ValueTree t;
 };
 
-/**
- Object which maintains a copy of a value tree
- for a critical audio thread. Existing non-object
- properties are updated with a simple message. Any
- other change results in a re-copy of the whole
- ValueTree.  This is fine for small trees, but
- may need some optimisation if things get bigger.
- 
- I'm not certain that this is lock-free if you
- are using Strings in your value tree. *TODO*
+/** @brief Maintain a clone of a ValueTree on a critical thread.
+ *
+ * Maintains a clone of a value tree for a critical thread. For example for 
+ * passing complex configuration from a GUI to an audio processing thread.
+ *
+ * @note Simple properties (Strings, integers and so on) are updated with a
+ * simple message. Adding properties or children results in a re-copy of the
+ * whole ValueTree.  This is fine for small trees, but may need some
+ * optimisation if things get bigger.  
+ *
+ * @note JUCE now has a ValueTreeSynchroniser class which may be useful instead
+ * of CriticalThreadValueTree
  */
 class CriticalThreadValueTree :
     public ValueTree::Listener
 {
-public:
-
+private:
+    /** @internal */
     class ValueTreeLinkCache
     {
     public:
@@ -62,6 +65,7 @@ public:
         {
             updateMap.clear();
         }
+        /** @internal */
         void add (const ValueTree& src, const ValueTree& copy)
         {
             MapEntry x;
@@ -69,7 +73,7 @@ public:
             x.copy = copy;
             updateMap.push_back (x);
         }
-        /* This could be a better, faster, structure. */
+        /** @internal This could be a better, faster, structure. */
         struct MapEntry
         {
             ValueTree main, copy;
@@ -77,20 +81,33 @@ public:
         std::vector<MapEntry> updateMap;
     };
 
-    /** A read-only copy of the value tree. */
+public:
+    /** @brief The output - the clone of the ValueTree. 
+     *
+     * A read-only copy of the value tree that you can access safely from your
+     * critical thread. 
+     */
     typename ValueTreeCopy::Ptr readonly;
 
+    /** @brief Configure the CriticalThreadValueTree.
+     *
+     * Requires a LockFreeCallQueue to be passed which will be used for the
+     * synchronisation.  You will need to regularly call synchronise on the
+     * LockFreeCallQueue from the critical thread so that the ValueTree gets
+     * updated.
+     */
     CriticalThreadValueTree (ValueTree source, LockFreeCallQueue& q) :
         jobsForCriticalThread (q)
     {
         readonly = new ValueTreeCopy (ValueTree ("null"));
         setSource (source);
     }
-    ~CriticalThreadValueTree()
-    {
-        DBG ("CriticalThreadValueTree deleted.");
-    }
 
+    ~CriticalThreadValueTree()
+    {}
+
+    /** @brief set the source tree to copy.  This is set initally by the
+     * constructor, so you may not need to call this function. */
     void setSource (ValueTree source)
     {
         sourceTree.removeListener (this);
@@ -99,20 +116,26 @@ public:
         syncAll();
     };
 
+    /** @internal */
     void valueTreeChildAdded (ValueTree& parentTree, ValueTree& childWhichHasBeenAdded)
     {
         syncAll();
     }
+    /** @internal */
     void valueTreeChildRemoved (ValueTree& parentTree, ValueTree& childWhichHasBeenRemoved)
     {
         syncAll();
     }
+    /** @internal */
     void valueTreeChildOrderChanged (ValueTree& parentTreeWhoseChildrenHaveMoved)
     {
         syncAll();
     }
+    /** @internal */
     void valueTreeParentChanged (ValueTree& treeWhoseParentHasChanged) {}
 
+    /** @brief Synchronise.  You shouldn't have to call this.  It should be called
+     * automatically from the non-critical thread when the ValueTree changes. */
     void syncAll()
     {
         /* Create a deep copy of the value tree.  Pass it to the other thread. */
@@ -124,6 +147,7 @@ public:
     }
 
 
+    /** @internal */
     void valueTreePropertyChanged (ValueTree& tree, const Identifier& property)
     {
         /* Send an update property message. Property removals are handled by sending
@@ -173,9 +197,9 @@ private:
 
         return (t.hasProperty (property));
     }
-    /* Create a series of ValueTree objects in one tree that map to
-     ones in another copy of that tree. The copy must be identical
-     to the source otherwise this may fail badly. */
+    /** @internal Create a series of ValueTree objects in one tree that map to
+     ones in another copy of that tree. The copy must be identical to the
+     source otherwise this may fail badly. */
     void updatePropertymap (ValueTree& src, ValueTree& copy)
     {
         linkCache.clear();
