@@ -8,15 +8,33 @@
   ==============================================================================
 */
 
+/*
+ 
+ BEGIN_JUCE_MODULE_DECLARATION
+
+  ID:               jcf_debug
+  vendor:           juce
+  version:          4.2.1
+  name:             JCF DEBUG
+  description:      Debugging utilities for JUCE
+  website:          http://www.github.com/jcredland/
+  license:          MIT
+
+  dependencies:     juce_core juce_graphics juce_gui_basics juce_gui_extra
+  OSXFrameworks:    
+  iOSFrameworks:    
+
+ END_JUCE_MODULE_DECLARATION
+ */
+
 #ifndef JCF_DEBUG_H_INCLUDED
 #define JCF_DEBUG_H_INCLUDED
-
 #include "AppConfig.h"
 #include <map>
-#include <modules/juce_core/juce_core.h>
-#include <modules/juce_graphics/juce_graphics.h>
-#include <modules/juce_gui_basics/juce_gui_basics.h>
-#include <modules/juce_gui_extra/juce_gui_extra.h>
+#include <juce_core/juce_core.h>
+#include <juce_graphics/juce_graphics.h>
+#include <juce_gui_basics/juce_gui_basics.h>
+#include <juce_gui_extra/juce_gui_extra.h>
 
 namespace jcf {
     

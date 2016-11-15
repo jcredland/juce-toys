@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="qQK9eo" name="debug_example" projectType="guiapp" version="1.0.0"
               bundleIdentifier="com.yourcompany.debug_example" includeBinaryInAppConfig="1"
-              jucerVersion="3.2.0">
+              jucerVersion="4.2.0">
   <MAINGROUP id="gMEy62" name="debug_example">
     <GROUP id="{4ECBD29B-CAAA-8475-9C1B-A483FD19B6B8}" name="Source">
       <FILE id="RlkP2f" name="MainComponent.cpp" compile="1" resource="0"
@@ -33,7 +33,7 @@
         <MODULEPATH id="juce_audio_devices" path="juce_modules"/>
         <MODULEPATH id="juce_audio_formats" path="juce_modules"/>
         <MODULEPATH id="juce_audio_processors" path="juce_modules"/>
-        <MODULEPATH id="jcf_debug" path="."/>
+        <MODULEPATH id="jcf_debug" path=".."/>
       </MODULEPATHS>
     </XCODE_MAC>
     <VS2013 targetFolder="Builds/VisualStudio2013">
@@ -57,7 +57,7 @@
         <MODULEPATH id="juce_audio_devices" path="juce_modules"/>
         <MODULEPATH id="juce_audio_formats" path="juce_modules"/>
         <MODULEPATH id="juce_audio_processors" path="juce_modules"/>
-        <MODULEPATH id="jcf_debug" path="."/>
+        <MODULEPATH id="jcf_debug" path=".."/>
       </MODULEPATHS>
     </VS2013>
   </EXPORTFORMATS>
