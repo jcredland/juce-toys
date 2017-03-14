@@ -480,7 +480,7 @@ BufferDebugger::BufferDebugger() : DocumentWindow ("Debug Buffer Viewer",
             Colours::lightgrey,
             DocumentWindow::allButtons)
 {
-    mainComponent = new BufferDebuggerMain;
+    mainComponent = new BufferDebuggerMain();
     mainComponent->setSize (500, 250);
     setContentNonOwned (mainComponent, true);
     setResizable (true, false);
