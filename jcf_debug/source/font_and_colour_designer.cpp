@@ -16,12 +16,12 @@ public:
         setSize (300, 400);
         addChangeListener (this);
     }
-    void setSwatchColour (int index, const Colour& newColour) const override
+    void setSwatchColour (int index, const Colour& newColour) const
     {
         targetColour = newColour;
         comp.repaint();
     }
-    void changeListenerCallback (ChangeBroadcaster*)
+    void changeListenerCallback (ChangeBroadcaster*) override
     {
         targetColour = getCurrentColour();
         comp.repaint();
@@ -52,7 +52,7 @@ public:
         addAndMakeVisible (list);
     }
 
-    void resized()
+    void resized() override
     {
         list.setBounds (getLocalBounds());
     }
@@ -68,7 +68,7 @@ public:
         updateFont();
     }
 
-    void selectedRowsChanged (int lastRowSelected)
+    void selectedRowsChanged (int lastRowSelected) override
     {
         number = lastRowSelected;
         updateFont();
@@ -130,7 +130,7 @@ public:
         tree.addListener (this);
     }
 
-    void resized()
+    void resized() override
     {
         tree        .setBounds (getLocalBounds().withTrimmedBottom (20));
         openButton  .setBounds (getLocalBounds().withTop (getHeight() - 20));
@@ -144,7 +144,7 @@ public:
         comp.repaint();
     }
 
-    void buttonClicked (Button*)
+    void buttonClicked (Button*) override
     {
         bool success = fileChooser.browseForDirectory();
 

@@ -30,7 +30,7 @@ public:
         h.addListener (this);
     }
 
-    void resized()
+    void resized() override
     {
         panel.setBounds (getLocalBounds());
     }

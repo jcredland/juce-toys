@@ -388,13 +388,13 @@ public:
             list.setRowHeight (13.0f);
         }
 
-        int getNumRows()
+        int getNumRows() override
         {
             return BufferDebuggerStore::getInstance()->size();
         }
 
         void paintListBoxItem (int rowNumber, Graphics& g,
-                               int width, int height, bool rowIsSelected)
+                               int width, int height, bool rowIsSelected) override
         {
             String s = BufferDebuggerStore::getInstance()->get (rowNumber)->getName();
 
@@ -410,12 +410,12 @@ public:
             owner.bufferListUpdated();
         }
 
-        void paint (Graphics& g)
+        void paint (Graphics& g) override
         {
             g.fillAll (Colours::lightgrey);
         }
 
-        void resized()
+        void resized() override
         {
             list.setBounds (getLocalBounds());
         }
@@ -447,7 +447,7 @@ public:
 
     ~BufferDebuggerMain();
 
-    void timerCallback()
+    void timerCallback() override
     {
         repaint();
     }
