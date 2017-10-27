@@ -9,7 +9,7 @@
 */
 
 /*
- 
+
  BEGIN_JUCE_MODULE_DECLARATION
 
   ID:               jcf_debug
@@ -21,8 +21,8 @@
   license:          MIT
 
   dependencies:     juce_core juce_graphics juce_gui_basics juce_gui_extra
-  OSXFrameworks:    
-  iOSFrameworks:    
+  OSXFrameworks:
+  iOSFrameworks:
 
  END_JUCE_MODULE_DECLARATION
  */
@@ -37,14 +37,13 @@
 #include <juce_gui_extra/juce_gui_extra.h>
 
 namespace jcf {
-    
+
 using namespace juce;
 
 #include "source/buffer_debugger.h"
 #include "source/value_tree_debugger.h"
 #include "source/component_debugger.h"
 #include "source/font_and_colour_designer.h"
-#include "source/advanced_leak_detector.h"
 
 }
 
