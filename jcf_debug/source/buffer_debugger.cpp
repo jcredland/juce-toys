@@ -476,9 +476,12 @@ private:
 };
 
 
-BufferDebugger::BufferDebugger() : DocumentWindow ("Debug Buffer Viewer",
-            Colours::lightgrey,
-            DocumentWindow::allButtons)
+BufferDebugger::BufferDebugger()
+    :
+    DocumentWindow ("Debug Buffer Viewer",
+        Colours::lightgrey,
+        DocumentWindow::allButtons),
+    mainComponent (new BufferDebuggerMain)
 {
     mainComponent->setSize (500, 250);
     setContentNonOwned (mainComponent, true);
