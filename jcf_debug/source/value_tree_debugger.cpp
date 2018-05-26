@@ -206,7 +206,7 @@ public:
         /* Works only if the ValueTree isn't updated between calls to getUniqueName. */
         String getUniqueName() const
         {
-            if (t.getParent() == ValueTree::invalid) return "1";
+            if (!t.getParent().isValid()) return "1";
 
             return String (t.getParent().indexOf (t));
         }
@@ -243,7 +243,7 @@ public:
 
     void setTree (ValueTree newTree)
     {
-        if (newTree == ValueTree::invalid)
+        if (!newTree.isValid())
         {
             treeView.setRootItem (nullptr);
         }
@@ -298,7 +298,7 @@ void ValueTreeDebugger::construct()
 
 ValueTreeDebugger::~ValueTreeDebugger()
 {
-    main->setTree (ValueTree::invalid);
+    main->setTree (ValueTree());
 }
 
 void ValueTreeDebugger::closeButtonPressed()
