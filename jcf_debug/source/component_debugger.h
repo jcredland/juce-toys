@@ -29,13 +29,13 @@
 
  e.g.
 
- ScopedPointer<jcf::ComponentDebugger> debugger;
+ std::unique_ptr<jcf::ComponentDebugger> debugger;
 
  Then something like:
 
  MainComponent::MainComponent()
  {
-    debugger = new jcf::ComponentDebugger(this);
+    debugger = std::make_unique<jcf::ComponentDebugger>(this);
  }
 
  When you click on a component in the debugger's list a box will
@@ -135,9 +135,9 @@ public:
 
         void setHighlight (Component* component)
         {
-            highlight = new Highlighter();
+            highlight = std::make_unique<Highlighter>();
             highlight->setBounds (getLocationOf (component));
-            root->addAndMakeVisible (highlight);
+            root->addAndMakeVisible (highlight.get());
         }
 
     private:
@@ -145,8 +145,8 @@ public:
         void paint (Graphics& g) override { g.fillAll (Colours::lightgrey); }
         void copyBoundsToClipboard();
 
-        ScopedPointer<Highlighter> highlight;
-        ScopedPointer<ComponentBoundsEditor> boundsEditor;
+        std::unique_ptr<Highlighter> highlight;
+        std::unique_ptr<ComponentBoundsEditor> boundsEditor;
 
         /* We use a default look and feel just in case your
          * application has some wacky and unreadable alternative

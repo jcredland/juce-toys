@@ -97,8 +97,8 @@ ComponentDebugger::Debugger::Debugger (Component* rootComponent)
     refresh();
     tree.setLookAndFeel (&lookAndFeel);
 
-    boundsEditor = new ComponentBoundsEditor (this);
-    addAndMakeVisible (boundsEditor);
+    boundsEditor = std::make_unique<ComponentBoundsEditor>(this);
+    addAndMakeVisible (boundsEditor.get());
 }
 
 

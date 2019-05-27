@@ -25,6 +25,6 @@ public:
     void mouseUp (const MouseEvent&) override;
 private:
     DocumentWindow window;
-    ScopedPointer<FontAndColorContent> content;
+    std::unique_ptr<FontAndColorContent> content;
 };
 

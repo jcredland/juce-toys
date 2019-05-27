@@ -61,7 +61,7 @@ public:
 
 private:
     void construct(); 
-    ScopedPointer<ValueTreeDebuggerMain> main;
+    std::unique_ptr<ValueTreeDebuggerMain> main;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ValueTreeDebugger);
 };
