@@ -84,15 +84,15 @@ public:
 
         void updateSubItems()
         {
-            ScopedPointer<XmlElement> openness = getOpennessState();
+            std::unique_ptr<XmlElement> openness = getOpennessState();
             clearSubItems();
             int children = t.getNumChildren();
 
             for (int i = 0; i < children; ++i)
                 addSubItem (new Item (propertiesEditor, t.getChild (i)));
 
-            if (openness)
-                restoreOpennessState (*openness);
+            if (openness.get())
+                restoreOpennessState (*openness.get());
         }
 
         void paintItem (Graphics& g, int w, int h)
