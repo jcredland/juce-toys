@@ -227,10 +227,10 @@ FontAndColourDesigner::FontAndColourDesigner (Component& parentComponent,
     :
     window ("Font and Colour", Colours::black, DocumentWindow::TitleBarButtons::allButtons, false)
 {
-    content = new FontAndColorContent (parentComponent, colourToUpdate, fontToUpdate);
+    content = std::make_unique<FontAndColorContent>(parentComponent, colourToUpdate, fontToUpdate);
 
     window.setContentComponentSize (content->getWidth(), content->getHeight());
-    window.setContentNonOwned (content, true);
+    window.setContentNonOwned (content.get(), true);
 
     parentComponent.addAndMakeVisible (this);
     setSize (10, 10);

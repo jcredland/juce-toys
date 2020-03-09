@@ -469,9 +469,9 @@ public:
     }
 private:
     bool paused;
-    ScopedPointer<Graph> graph;
-    ScopedPointer<List> list;
-    ScopedPointer<Info> info;
+    std::unique_ptr<Graph> graph;
+    std::unique_ptr<List> list;
+    std::unique_ptr<Info> info;
     TextButton pauseUpdates;
 };
 
@@ -484,7 +484,7 @@ BufferDebugger::BufferDebugger()
     mainComponent (new BufferDebuggerMain)
 {
     mainComponent->setSize (500, 250);
-    setContentNonOwned (mainComponent, true);
+    setContentNonOwned (mainComponent.get(), true);
     setResizable (true, false);
     setUsingNativeTitleBar (true);
 
@@ -506,17 +506,17 @@ BufferDebuggerMain::BufferDebuggerMain()
     :
     paused (false)
 {
-    list = new List (*this);
-    graph = new Graph (*this);
-    info = new Info (*this);
+    list = std::make_unique<List>(*this);
+    graph = std::make_unique<Graph>(*this);
+    info = std::make_unique<Info>(*this);
 
     pauseUpdates.setButtonText ("Pause");
     pauseUpdates.addListener (this);
 
     addAndMakeVisible (pauseUpdates);
-    addAndMakeVisible (graph);
-    addAndMakeVisible (info);
-    addAndMakeVisible (list);
+    addAndMakeVisible (graph.get());
+    addAndMakeVisible (info.get());
+    addAndMakeVisible (list.get());
 
 
     startTimer (100);

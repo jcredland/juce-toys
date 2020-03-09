@@ -70,7 +70,7 @@ public:
     static void capture (const String& name, const float* dataToCapture,
                          int size, float min, float max);
 private:
-    ScopedPointer<BufferDebuggerMain> mainComponent;
+    std::unique_ptr<BufferDebuggerMain> mainComponent;
 };
 
 #endif  // BUFFER_VISUALISER_H_INCLUDED

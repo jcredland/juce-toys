@@ -84,15 +84,15 @@ public:
 
         void updateSubItems()
         {
-            ScopedPointer<XmlElement> openness = getOpennessState();
+            std::unique_ptr<XmlElement> openness = getOpennessState();
             clearSubItems();
             int children = t.getNumChildren();
 
             for (int i = 0; i < children; ++i)
                 addSubItem (new Item (propertiesEditor, t.getChild (i)));
 
-            if (openness)
-                restoreOpennessState (*openness);
+            if (openness.get())
+                restoreOpennessState (*openness.get());
         }
 
         void paintItem (Graphics& g, int w, int h)
@@ -250,15 +250,15 @@ public:
         else if (tree != newTree)
         {
             tree = newTree;
-            rootItem = new Item (&propertyEditor, tree);
-            treeView.setRootItem (rootItem);
+            rootItem = std::make_unique<Item>(&propertyEditor, tree);
+            treeView.setRootItem (rootItem.get());
         }
     }
 
 public:
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ValueTreeDebuggerMain);
 
-    ScopedPointer<Item> rootItem;
+    std::unique_ptr<Item> rootItem;
     ValueTree tree;
     TreeView treeView;
     PropertyEditor propertyEditor;
@@ -288,8 +288,8 @@ ValueTreeDebugger::ValueTreeDebugger(ValueTree & tree)
 
 void ValueTreeDebugger::construct()
 {
-    main = new ValueTreeDebuggerMain();
-    setContentNonOwned (main, true);
+    main = std::make_unique<ValueTreeDebuggerMain>();
+    setContentNonOwned (main.get(), true);
     setResizable (true, false);
     setUsingNativeTitleBar (true);
     centreWithSize (getWidth(), getHeight());
