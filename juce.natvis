@@ -17,36 +17,78 @@ See http://github.com/jcredland/juce-toys
 -->
 <AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
 
+
 <Type Name="juce::Array&lt;*&gt;">
-    <DisplayString Condition="numUsed == 0">{{ EMPTY numAllocated={data.numAllocated} }}</DisplayString>
-    <DisplayString>{{ numUsed={numUsed} numAllocated={data.numAllocated} }}</DisplayString>
+    <DisplayString Condition="values.numUsed == 0">{{ EMPTY numAllocated={values.numAllocated} }}</DisplayString>
+    <DisplayString>{{ numUsed={values.numUsed} numAllocated={values.numAllocated} }}</DisplayString>
     <Expand>
-        <Item Name="[numUsed]">numUsed</Item>
+        <Item Name="[numUsed]">values.numUsed</Item>
         <ArrayItems>
-            <Size>numUsed</Size>
-            <ValuePointer>data.elements.data</ValuePointer>
+            <Size>values.numUsed</Size>
+            <ValuePointer>values.elements.data</ValuePointer>
         </ArrayItems>
     </Expand>
 </Type>
 
 <Type Name="juce::ReferenceCountedArray&lt;*&gt;">
-    <DisplayString Condition="numUsed == 0">{{ EMPTY numAllocated={data.numAllocated} }}</DisplayString>
-    <DisplayString>{{ numUsed={numUsed} numAllocated={data.numAllocated} }}</DisplayString>
+    <DisplayString Condition="values.numUsed == 0">{{ EMPTY numAllocated={values.numAllocated} }}</DisplayString>
+    <DisplayString>{{ numUsed={values.numUsed} numAllocated={values.numAllocated} }}</DisplayString>
     <Expand>
-        <Item Name="[numUsed]">numUsed</Item>
+        <Item Name="[numUsed]">values.numUsed</Item>
         <ArrayItems>
-            <Size>numUsed</Size>
-            <ValuePointer>data.elements.data</ValuePointer>
+            <Size>values.numUsed</Size>
+            <ValuePointer>values.elements.data</ValuePointer>
         </ArrayItems>
+    </Expand>
+</Type>
+
+
+<Type Name="juce::ValueTree::SharedObject">
+    <DisplayString>{{ (ValueTree) type={type, sb} }}</DisplayString>
+    <Expand>
+        <Synthetic Name="[properties]">
+			<DisplayString>numProperties={properties.values.values.numUsed}</DisplayString>
+			<Expand>
+				<ArrayItems>
+					<Size>properties.values.values.numUsed</Size>
+					<ValuePointer>properties.values.values.elements.data</ValuePointer>
+				</ArrayItems>
+			</Expand>
+		</Synthetic>
+        <Synthetic Name="[children]">
+			<DisplayString>numChildren={children.values.numUsed}</DisplayString>
+			<Expand>
+				<ArrayItems>
+					<Size>children.values.numUsed</Size>
+					<ValuePointer>children.values.elements.data</ValuePointer>
+				</ArrayItems>
+			</Expand>
+		</Synthetic>
     </Expand>
 </Type>
 
 <Type Name="juce::ValueTree">
     <DisplayString Condition="object.referencedObject == 0">ValueTree::invalid</DisplayString>
-    <DisplayString>{{ (valuetree) type={object.referencedObject->type} }}</DisplayString>
+    <DisplayString>{{ (ValueTree) type={object.referencedObject->type,sb} }}</DisplayString>
     <Expand>
-        <Item Name="properties">object.referencedObject->properties</Item>
-        <Item Name="children">object.referencedObject->children</Item>
+        <Synthetic Name="[properties]">
+			<DisplayString>numProperties={object.referencedObject->properties.values.values.numUsed}</DisplayString>
+			<Expand>
+				<ArrayItems>
+					<Size>object.referencedObject->properties.values.values.numUsed</Size>
+					<ValuePointer>object.referencedObject->properties.values.values.elements.data</ValuePointer>
+				</ArrayItems>
+			</Expand>
+		</Synthetic>
+        <Synthetic Name="[children]">
+			<DisplayString>numChildren={object.referencedObject->children.values.numUsed}</DisplayString>
+			<Expand>
+				<ArrayItems>
+					<Size>object.referencedObject->children.values.numUsed</Size>
+					<ValuePointer>object.referencedObject->children.values.elements.data</ValuePointer>
+				</ArrayItems>
+			</Expand>
+		</Synthetic>
     </Expand>
 </Type>
 
@@ -81,7 +123,7 @@ See http://github.com/jcredland/juce-toys
     <DisplayString Condition="type == &amp;juce::var::VariantType_Double::instance">{{ doubleValue={value.doubleValue} }}</DisplayString>
     <DisplayString Condition="type == &amp;juce::var::VariantType_Bool::instance">{{ boolValue={value.boolValue} }}</DisplayString>
     <!-- -->
-    <DisplayString Condition="type == &amp;juce::var::VariantType_String::instance">{{ stringValue={reinterpret_cast&lt;String*&gt;(value.stringValue)->text.data} }}</DisplayString>
+    <DisplayString Condition="type == &amp;juce::var::VariantType_String::instance">{{ stringValue={reinterpret_cast&lt;String*&gt;(value.stringValue)->text.data,sb} }}</DisplayString>
     <DisplayString Condition="type == &amp;juce::var::VariantType_Object::instance">{{ VariantType_Object }}</DisplayString>
     <DisplayString Condition="type == &amp;juce::var::VariantType_Array::instance">{{ VariantType_Array }}</DisplayString>
     <!-- -->
@@ -89,4 +131,7 @@ See http://github.com/jcredland/juce-toys
     <DisplayString Condition="type == &amp;juce::var::VariantType_Method::instance">{{ VariantType_Method }}</DisplayString>
 </Type>
 
+<Type Name="juce::NamedValueSet::NamedValue">
+    <DisplayString>{{ {name,sb} {value}}}</DisplayString>
+</Type>
 </AutoVisualizer>
