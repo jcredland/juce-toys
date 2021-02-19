@@ -45,8 +45,8 @@ import lldb
 # Much Python/LLDB magic...
 
 def __lldb_init_module(debugger, dict):
-    print "-- juce decoding modules loaded.  www.credland.net"
-    print " - refer to the help for the 'type' command"
+    print("-- juce decoding modules loaded.  www.credland.net")
+    print(" - refer to the help for the 'type' command")
 
     # ValueTree<*>
     debugger.HandleCommand('type synthetic add "juce::ValueTree" --python-class juce_lldb_xcode.ValueTreeChildrenProvider -w juce')
@@ -124,9 +124,9 @@ def var_summary(valueObject, dictionary):
     if varType.GetName() == "juce::var::VariantType_String *":
         stringValue = varValue.GetChildMemberWithName('stringValue')
         stringPointerType = valueObject.GetFrame().GetModule().FindFirstType('juce::String').GetPointerType()
-        print stringPointerType
+        print(stringPointerType)
         stringPointer = stringValue.Cast(stringPointerType)
-        print stringPointer
+        print(stringPointer)
         s = 'string=' + stringPointer.Dereference().GetSummary() + stringPointer.GetValue()
         # now we have to convert the .value to a pointer ... 
     if varType.GetName() == "juce::var::VariantType_Int *":
@@ -135,10 +135,10 @@ def var_summary(valueObject, dictionary):
 
 def ComponentSummary(valueObject, dictionary):
     # Component 'name' parent=None visible=True location={ 0, 0, 20, 20 } opaque=False
-    print int(valueObject.GetChildMemberWithName('parentComponent').GetValue(), 16) 
+    print(int(valueObject.GetChildMemberWithName('parentComponent').GetValue(), 16))
     hasParent = int(valueObject.GetChildMemberWithName('parentComponent').GetValue(), 16) == 0
     isVisible = valueObject.GetChildMemberWithName('flags').GetChildMemberWithName('visibleFlag').GetValue()
-    print type(isVisible)
+    print(type(isVisible))
     name = string_summary(valueObject.GetChildMemberWithName('componentName'), dictionary)
 
     s = name + " hasParent=" + str(hasParent) + " isVisible=" + str(isVisible)
@@ -154,7 +154,7 @@ class ValueTreeChildrenProvider:
         # variable to provide synthetic children for. 
         #
         # JCF_ Most of the actual work is done in update()
-        print "VTCP with " + valueObject.GetName()
+        print("VTCP with " + valueObject.GetName())
         self.v = valueObject
         self.count = 0
         self.update()
@@ -167,7 +167,7 @@ class ValueTreeChildrenProvider:
     def get_child_index(self, name): 
         # this call should return the index of the synthetic child whose name is
         # given as argument 
-        print "get_child_index: " + name
+        print("get_child_index: " + name)
         try:
             return int(name.lstrip('[').rstrip(']'))
         except:
@@ -206,7 +206,7 @@ class ArrayChildrenProvider:
         # variable to provide synthetic children for. 
         #
         # JCF_ Most of the actual work is done in update()
-        print "ACP with " + valueObject.GetName()
+        print("ACP with " + valueObject.GetName())
         self.v = valueObject
         self.count = 0
         self.update()
@@ -219,13 +219,13 @@ class ArrayChildrenProvider:
         # JC - no matter what we do here it seems to call get_child_at_index
         # target.max-children times
         if (self.count > 100):
-            print "WARNING count = " + self.count
+            print("WARNING count = " + self.count)
         return int(self.count)
 
     def get_child_index(self, name): 
         # this call should return the index of the synthetic child whose name is
         # given as argument 
-        print "get_child_index: " + name
+        print("get_child_index: " + name)
         try:
             return int(name.lstrip('[').rstrip(']'))
         except:
@@ -244,7 +244,7 @@ class ArrayChildrenProvider:
             offset = index * self.data_size
             return self.first_element.CreateChildAtOffset('[' + str(index) + ']', offset, self.data_type)
         except:
-            print "Array<> error"
+            print("Array<> error")
             return None
 
     def update(self): 
@@ -260,12 +260,12 @@ class ArrayChildrenProvider:
             try:
                 self.count = int(self.v.GetChildMemberWithName('numUsed').GetValue())
             except TypeError:
-                print "ACP invalid numUsed.  Set count to 0"
+                print("ACP invalid numUsed.  Set count to 0")
                 self.count = 0
         else:
             self.count = 0
 
-        print "ACP set self.count to " + str(self.count)
+        print("ACP set self.count to " + str(self.count))
 
         return 
 
