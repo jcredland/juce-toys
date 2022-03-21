@@ -115,20 +115,17 @@ See http://github.com/jcredland/juce-toys
     class VariantType_Method;     friend class VariantType_Method;
     -->
 <Type Name="juce::var">
-    <DisplayString Condition="type == &amp;juce::var::VariantType_Void::instance">{{ intValue={value.intValue} }}</DisplayString>
-    <DisplayString Condition="type == &amp;juce::var::VariantType_Undefined::instance">{{ intValue={value.intValue} }}</DisplayString>
-    <DisplayString Condition="type == &amp;juce::var::VariantType_Int::instance">{{ intValue={value.intValue} }}</DisplayString>
-    <!-- -->
-    <DisplayString Condition="type == &amp;juce::var::VariantType_Int64::instance">{{ int64Value={value.int64Value} }}</DisplayString>
-    <DisplayString Condition="type == &amp;juce::var::VariantType_Double::instance">{{ doubleValue={value.doubleValue} }}</DisplayString>
-    <DisplayString Condition="type == &amp;juce::var::VariantType_Bool::instance">{{ boolValue={value.boolValue} }}</DisplayString>
-    <!-- -->
-    <DisplayString Condition="type == &amp;juce::var::VariantType_String::instance">{{ stringValue={reinterpret_cast&lt;String*&gt;(value.stringValue)->text.data,sb} }}</DisplayString>
-    <DisplayString Condition="type == &amp;juce::var::VariantType_Object::instance">{{ VariantType_Object }}</DisplayString>
-    <DisplayString Condition="type == &amp;juce::var::VariantType_Array::instance">{{ VariantType_Array }}</DisplayString>
-    <!-- -->
-    <DisplayString Condition="type == &amp;juce::var::VariantType_Binary::instance">{{ VariantType_Binary }}</DisplayString>
-    <DisplayString Condition="type == &amp;juce::var::VariantType_Method::instance">{{ VariantType_Method }}</DisplayString>
+    <DisplayString Condition="type == &amp;juce::var::Instance::attributesVoid">{{ intValue={value.intValue} }}</DisplayString>
+    <DisplayString Condition="type == &amp;juce::var::Instance::attributesUndefined">{{ intValue={value.intValue} }}</DisplayString>
+    <DisplayString Condition="type == &amp;juce::var::Instance::attributesInt">{{ intValue={value.intValue} }}</DisplayString>
+    <DisplayString Condition="type == &amp;juce::var::Instance::attributesInt64">{{ int64Value={value.int64Value} }}</DisplayString>
+	<DisplayString Condition="type == &amp;juce::var::Instance::attributesBool">{{ boolValue={value.boolValue} }}</DisplayString>
+    <DisplayString Condition="type == &amp;juce::var::Instance::attributesDouble">{{ doubleValue={value.doubleValue} }}</DisplayString>
+    <DisplayString Condition="type == &amp;juce::var::Instance::attributesString">{{ stringValue={reinterpret_cast&lt;String*&gt;(value.stringValue)->text.data,sb} }}</DisplayString>
+    <DisplayString Condition="type == &amp;juce::var::Instance::attributesObject">{{ VariantType_Object }}</DisplayString>
+    <DisplayString Condition="type == &amp;juce::var::Instance::attributesArray">{{ VariantType_Array }}</DisplayString>
+    <DisplayString Condition="type == &amp;juce::var::Instance::attributesBinary">{{ VariantType_Binary }}</DisplayString>
+    <DisplayString Condition="type == &amp;juce::var::Instance::attributesMethod">{{ VariantType_Method }}</DisplayString>
 </Type>
 
 <Type Name="juce::NamedValueSet::NamedValue">
