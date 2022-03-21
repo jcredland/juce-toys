@@ -124,6 +124,8 @@ def var_summary(valueObject, dictionary):
         value = "double=" + varValue.GetChildMemberWithName("doubleValue").GetValue()
     elif varType.GetChildMemberWithName("isBool").GetValue() == "true":
         value = "bool=" + varValue.GetChildMemberWithName("boolValue").GetValue()
+    elif varType.GetChildMemberWithName("isVoid").GetValue() == "true":
+        value = "void"
     return value
 
 def ComponentSummary(valueObject, dictionary):
@@ -248,14 +250,12 @@ class ArrayChildrenProvider:
 
         # ReferenceCountedArrays store pointers, *not* the objects themselves
         if (self.valueObject.GetTypeName().startswith("juce::ReferenceCounted")):
-            print("pointer motherfucker")
             self.data_type = self.valueObject.GetType().GetTemplateArgumentType(0).GetPointerType()
-            self.data_size = self.data_type.GetByteSize()
         else:
             # type of first template argument. For example juce::Array<int> would be int
             self.data_type = self.valueObject.GetType().GetTemplateArgumentType(0)
-            self.data_size = self.data_type.GetByteSize()
 
+        self.data_size = self.data_type.GetByteSize()
         if self.first_element.IsValid():
             self.count = self.valueObject.GetChildMemberWithName('values').GetChildMemberWithName('numUsed').GetValueAsUnsigned()
         else:
