@@ -14,6 +14,8 @@ See https://msdn.microsoft.com/en-us/library/jj620914.aspx
 An equivalent LLDB file is provided.  Installation instructions are in the
 comments at the top of the file.  See juce_lldb_xcode.py.
 
+If you'd like to add new types, see [Sudara's guide to creating lldb type summaries and children](https://melatonin.dev/blog/how-to-create-lldb-type-summaries-and-synthetic-children-for-your-custom-types/).
+
 ## JCF_DEBUG: JUCE Debugging Module
 
 There are five development debugging utilities in the juce module jcf_debug.
