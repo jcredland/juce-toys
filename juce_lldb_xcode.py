@@ -133,7 +133,7 @@ def ComponentSummary(valueObject, dictionary):
     # print(int(valueObject.GetChildMemberWithName('parentComponent').GetValue(), 16))
     hasParent = int(valueObject.GetChildMemberWithName('parentComponent').GetValue(), 16) == 0
     isVisible = valueObject.GetChildMemberWithName('flags').GetChildMemberWithName('visibleFlag').GetValue()
-    name = string_summary(valueObject.GetChildMemberWithName('componentName'), dictionary)
+    name = valueObject.GetChildMemberWithName('componentName').GetChildMemberWithName('text').GetChildMemberWithName('data').GetSummary()
     s = name + " hasParent=" + str(hasParent) + " isVisible=" + str(isVisible)
     return s
 
