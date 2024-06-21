@@ -25,6 +25,12 @@ I use these all the time.  They are:
   its children as a tree in a separate window.  Problem components are marked
   in grey (not visible), yellow (off screen) or red (zero size). (See the
   screenshot png in the root folder)
+
+  The component debugger is pretty primative.  You might want to instead look
+  at this project which is a far sexier of roughly the same idea:
+
+  https://github.com/sudara/melatonin_inspector
+  
 - ValueTreeDebugger - attach this to a valuetree and a separate window will
   open where you can view (and change properties) of the tree. 
 - BufferDebugger - one of these can be used to view a buffer (typically an
