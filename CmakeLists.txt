@@ -1,0 +1,8 @@
+juce_add_module("jcf_debug")
+add_library(jcf::debug ALIAS jcf_debug)
+
+juce_add_module("jcf_advanced_leak_detector")
+add_library(jcf::advanced_leak_detector ALIAS jcf_advanced_leak_detector)
+
+juce_add_module("multithreading")
+add_library(jcf::multithreading ALIAS multithreading)

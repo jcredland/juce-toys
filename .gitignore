@@ -1,0 +1,20 @@
+# Builds
+[Bb]uild
+[Rr]elease
+JuceLibraryCode
+
+# Windows
+[Tt]humbs.db
+
+# macOS
+.DS_Store
+*.DS_Store
+*.swp
+*~
+._*
+
+# IDEs
+.vscode
+*.code-workspace
+.vs
+.idea
